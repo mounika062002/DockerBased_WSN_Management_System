@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:2.11.2-pg15
+    container_name: timescaledb
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: wsn_data
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    networks:
+      - wsn_network
+
+  flask-api:
+    build: ./backend
+    container_name: flask-api
+    ports:
+      - "5000:5000"
+    networks:
+      - wsn_network
+    depends_on:
+      - timescaledb
+    environment:
+      - DB_HOST=timescaledb
+      - DB_PORT=5432
+      - DB_NAME=wsn_data
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - wsn_network
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_DATABASE_HOST=timescaledb
+      - GF_DATABASE_PORT=5432
+    depends_on:
+      - timescaledb
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    ports:
+      - "1880:1880"
+    networks:
+      - wsn_network
+    volumes:
+      - nodered_data:/data
+    depends_on:
+      - flask-api
+
+volumes:
+  timescale_data:
+  grafana_data:
+  nodered_data:
+
+networks:
+  wsn_network:
+    driver: bridge

@@ -1,0 +1,5 @@
+Flask
+Flask-RESTful
+Flask-Cors
+psycopg2
+requests
