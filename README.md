@@ -29,7 +29,7 @@ Containerized Setup      : All components run in isolated containers for easy de
 Extensible Architecture  : Easily extendable to support new sensors, analytics, or machine learning modules.
 
 # Installation
-Ensure you have Docker and Docker Compose installed on your system. Download the project files from the GitHub repository. Place the wsn_data.sql file, backend folder, Grafana dashboard JSON, and Node-RED flow JSON in the project directory. Configure the docker-compose.yml file as per your environment. Open a terminal in the project folder and run docker-compose up --build to start all services. Once the setup is complete, access the Flask API at http://localhost:5000, Grafana at http://localhost:3000, and Node-RED at http://localhost:1880. Please note that additional configuration steps may be required depending on your specific environment.
+Ensure you have Docker and Docker Compose installed on your system. Download the project files from the GitHub repository. Place the wsn_data.sql file, backend folder, Grafana dashboard JSON, and Node-RED flow JSON in the project directory. Configure the docker-compose.yml file as per your environment. Open a terminal in the project folder and run docker-compose up --build to start all services. Once the setup is complete, access the Flask API, Grafana and Node-RED . Please note that additional configuration steps may be required depending on your specific environment.
 
 # Contributing
 
